@@ -1,0 +1,10 @@
+---
+name: GCJ-Cni
+version: 0.01
+author:
+  - David Rusek <rusekd@cpan.org>
+abstract: Perl Wrapper around GNU Compiler for Java CNI interface
+license: perl
+dynamic_config: 1
+provides: {}
+generated_by: Module::Build version 0.2611

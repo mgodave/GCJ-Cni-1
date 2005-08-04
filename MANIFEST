@@ -1,0 +1,10 @@
+Build.PL
+lib/GCJ/Cni.i
+lib/GCJ/Cni.pm.PL
+lib/GCJ/Cni.pod
+MANIFEST			This list of files
+META.yml
+t/attachthread.t
+t/createjvm.t
+t/detachthread.t
+Makefile.PL

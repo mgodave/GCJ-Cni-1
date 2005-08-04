@@ -1,0 +1,62 @@
+=head1 NAME
+
+GCJ::Cni - CNI Bindings to GNU Compiler for Java
+
+=head1 SYNOPSIS
+
+Using this module in Perl is similar to using it in C++:
+
+   use GCJ::Cni;
+   
+   if ( GCJ::Cni::JvCreateJavaVM(undef) ) {
+     die "Failed to initialize JavaVM, cannot continue...";
+   }
+   
+   unless ( my $thread_obj = GCJ::Cni::JvAttachCurrentThread(undef, undef) ) {
+     die "Failed to attach thread, cannot continue...";
+   }
+   
+   ...
+   
+   if ( GCJ::Cni::JvDetachCurrentThread() ) {
+     die "Failed to detach current thread, cannot continue...";
+   }
+
+=head1 DESCRIPTION
+
+This module wraps the GCJ CNI interface for use in Perl.  This library is needed to call natively compiled (by way of GCJ) Java classes from Perl.  This can be used to write Perl modules in Java instead of the customary C or C++.
+
+=head1 METHODS
+
+Descriptions taken and modified from http://gcc.gnu.org/onlinedocs/gcj/Invocation.html#Invocation.
+
+=over 4
+
+=item JvCreateJavaVM(undef)
+
+Initializes the Java runtime. This function performs essential initialization of the threads interface, garbage collector, exception handling and other key aspects of the runtime. It must be called once by a Perl application, before any other Java or CNI calls are made. It is safe, but not recommended, to call JvCreateJavaVM() more than once provided it is only called from a single thread.
+
+=item JvAttachCurrentThread(undef, undef)
+
+Registers an existing thread with the Java runtime. This must be called once from each thread, before that thread makes any other Java or CNI calls. It must be called after JvCreateJavaVM. The thread will be a member of the main thread group. The return value is the Java Thread object that represents the thread and undef otherwise. It is safe to call JvAttachCurrentThread() more than once from the same thread. If the thread is already attached, the call is ignored and the current thread object is returned.
+
+=item JvDetachCurrentThread()
+
+Unregisters a thread from the Java runtime. This should be called by threads that were attached using JvAttachCurrentThread(), after they have finished making calls to Java code. This ensures that any resources associated with the thread become eligible for garbage collection. This function returns 0 upon success, or -1 if the current thread is not attached.
+
+=back
+
+=head1 TODO
+
+This module does not currently support the following features:
+
+- Passing of Initialization Arguments to JvCreateJavaVM
+- Setting of Thread Name in JvAttachCurrentThread
+- Setting of ThreadGroup in JvAttachCurrentThread
+- Use of Thread object returned from JvAttachCurrentThread
+
+=head1 AUTHOR
+
+David Rusek, rusekd@cpan.org
+
+=head1 SEE ALSO

@@ -24,16 +24,16 @@
 
 typedef int jint;
 typedef int jsize;
-typedef char jchar;
+//typedef char jchar;
 
 jint JvCreateJavaVM (JvVMInitArgs* vm_args);
 jstring JvNewStringLatin1 (const char *bytes);
 jstring JvNewStringLatin1 (const char *bytes, jsize len);
 jstring JvAllocString (jsize sz);
 jstring JvNewString (const jchar *chars, jsize len);
-jchar* JvGetStringChars (jstring str);
-jsize JvGetStringUTFLength (jstring string);
-jsize JvGetStringUTFRegion (jstring str, jsize start, jsize len, char *buf);
+//jchar* JvGetStringChars (jstring str);
+//jsize JvGetStringUTFLength (jstring string);
+//jsize JvGetStringUTFRegion (jstring str, jsize start, jsize len, char *buf);
 jstring JvNewStringUTF (const char *bytes);
 java::lang::Thread* JvAttachCurrentThread (jstring name, java::lang::ThreadGroup* group);
 java::lang::Thread* JvAttachCurrentThreadAsDaemon (jstring name, java::lang::ThreadGroup* group);

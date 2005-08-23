@@ -46,6 +46,57 @@ Unregisters a thread from the Java runtime. This should be called by threads tha
 
 =back
 
+=head1 PRACTICAL USE
+
+The main purpose of wrapping the CNI interface is to allow us to write Perl modules in Java.  The CNI interface allows us to represent and use a natively compiled Java class (compiled with gcj -c) as a C++ class.  In short, we can then XS wrap that C++ class representation, compile it with the GNU compiler suite, write our Perl module and be on our way.  For instance, say we wanted to wrap the following Java class:
+
+   public class APerlModule {
+      
+      public APerlModule() {
+         System.out.println("Constructing APerlModule in Java");
+         //Do Some Work in Java
+      }
+
+      public void doAJavaMethod() {
+         System.out.println("doAJavaMethod was called on APerlModule");
+         //Do Some More Work in Java
+      }
+   
+   }
+
+We would first compile this class using the GNU compiler suite:
+
+   gcj -C APerlModule.java
+   gcjh APerlModule
+   gcj -c APerlModule.java
+   #or gcc -c APerlModule.java
+   #or gcc -c APerlModule.class
+   #or gcj -c APerlModule.class
+
+As a result we would see three new files in our current directory, APerlModule.class, APerlModule.o and APerlModule.h.  We can now wrap the C++ interface described in APerlModule.h in XS, write a Perl DynaLoaded module to use it and be on our way.  My favorite way to do this is by using SWIG:
+
+   swig -c++ -perl -module APerlModule APerlModule.h
+   #results in APerlModule.pm and APerlModule.cxx being created
+   g++ -c -include APerlModule.h APerlModule_wrap.cxx -I<your Perl inc directory>
+   g++ -shared -lgcj APerlModule.o APerlModule_wrap.o -o APerlModule.so
+
+As a result you will now have APerlModule.pm and APerlModule.so which you can now call from Perl code:
+
+   use APerlModule;
+
+   my $perl_module = new APerlModule::APerlModule();
+   $perl_module->doAJavaMethod();
+
+Of course this is an oversimplified example which does not address things such as Passing arguments to methods, recieving return values from methods, catching exceptions or inheritance.  In order to pass arguments ,get return values and use Java-style inheritance, you will have to make sure that you wrap every Java Object that you plan on using from Perl and natively compile that class.  In addition, SWIG will wrap all exceptions into a Perl die statement and your program will exit on exception unless you catch it with an eval statement.  If writing custom XS code or using another tool to wrap your C++ interface you should be aware of how you will be handling exceptions.
+
+One benefit of this approach to calling Java classes from Perl is that although the classes directly called from Perl must be natively compiled, any classes that they call behind the scenes may be class compiled.  In fact, as a nice side-effect of GCJ, you may freely mix native and class compiled Java code.
+
+A practical use of this approach might be to write a Java class that calls EJBs and returns DTOs.  To do this you would only have to natively compile and XS wrap your DTO class and your EJB client class.
+
+=head1 REQUIREMENTS
+
+This module requires gcc-java >= 4.0 to build and run.
+   
 =head1 TODO
 
 This module does not currently support the following features:

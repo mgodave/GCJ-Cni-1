@@ -21,9 +21,9 @@ lib/GCJ/Cni.pm
 lib/GCJ/Cni.pod
 lib/GCJ/Cni.xs
 lib/GCJ/Examples.pod
-Makefile.PL
 MANIFEST			This list of files
 META.yml
 t/attachthread.t
 t/createjvm.t
 t/detachthread.t
+Makefile.PL

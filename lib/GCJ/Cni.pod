@@ -102,12 +102,21 @@ This module requires gcc-java >= 4.0 to build and run.
 This module does not currently support the following features:
 
 - Passing of Initialization Arguments to JvCreateJavaVM
+
 - Setting of Thread Name in JvAttachCurrentThread
+
 - Setting of ThreadGroup in JvAttachCurrentThread
+
 - Use of Thread object returned from JvAttachCurrentThread
+
+=head1 ACKNOWLEDGEMENTS
+
+A Special thanks to Google and the Perl Foundation for sponsoring this project through the first ever "Summer of Code"
 
 =head1 AUTHOR
 
 David Rusek, rusekd@cpan.org
 
 =head1 SEE ALSO
+
+perl(1), Java::Import(3), Inline::Java(3), GCJ (http://gcc.gnu.org/java)

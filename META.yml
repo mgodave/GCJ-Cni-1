@@ -1,14 +1,8 @@
----
+--- #YAML:1.0
 name: GCJ-Cni
-version: 0.02
+version: 0.03
 author:
   - David Rusek <rusekd@cpan.org>
 abstract: Perl Wrapper around GNU Compiler for Java CNI interface
 license: perl
-dynamic_config: 1
-provides:
-  GCJ::Cni:
-    file: lib/GCJ/Cni.pm
-  GCJ::Cnic:
-    file: lib/GCJ/Cni.pm
-generated_by: Module::Build version 0.2611
+generated_by: Module::Build version 0.2611, without YAML.pm

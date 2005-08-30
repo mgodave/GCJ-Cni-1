@@ -264,7 +264,7 @@ And finally we can use our new Module:
   
   GCJ::Cni::JvDetachCurrentThread();
 
-This was a rather trivial example, however, imagine you had to talk to a third party system over an via RMI calls such as these and 
+This was a rather trivial example, however, imagine you had to talk to a third party system over via RMI calls such as these and 
 interface it with your own Perl system.  Well, you may write a Java library that talks to the RMI server and gets Objects from the server,
 then, does some hardcore processing on them, in Java of course, and packages the results into something your Perl system
 understands how to use.  Maybe you're importing data from one system to another during a nightly load, or you're gathering 

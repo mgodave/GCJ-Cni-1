@@ -22,7 +22,7 @@ my $class = Module::Build->subclass(
 
 my $build = $class->new
  ( module_name => 'GCJ::Cni',
-   dist_version => '0.02',
+   dist_version => '0.03',
    dist_author => 'David Rusek <rusekd@cpan.org>',
    dist_abstract => 'Perl Wrapper around GNU Compiler for Java CNI interface',
    license => 'perl',
